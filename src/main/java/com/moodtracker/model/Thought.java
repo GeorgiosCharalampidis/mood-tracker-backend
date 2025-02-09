@@ -1,7 +1,6 @@
-package com.moodtracker;
+package com.moodtracker.model;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import java.time.LocalDate;
 
@@ -13,9 +12,8 @@ public class Thought {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull
-    @Size(max = 500)
     @Column(nullable = false)
+    @Size(min = 1, max = 500) // Limit text length
     private String text;
 
     @Column

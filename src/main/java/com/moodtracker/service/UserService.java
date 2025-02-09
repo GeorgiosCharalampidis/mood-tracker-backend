@@ -1,5 +1,7 @@
-package com.moodtracker;
+package com.moodtracker.service;
 
+import com.moodtracker.model.User;
+import com.moodtracker.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
