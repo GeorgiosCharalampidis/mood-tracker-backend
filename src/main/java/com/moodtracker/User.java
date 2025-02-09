@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+import java.util.List;
 
 @Entity
 @Table(name = "users", uniqueConstraints = {
@@ -31,6 +32,9 @@ public class User {
     @Size(max = 120)
     @Column(nullable = false)
     private String password;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Thought> thoughts;
 
     // Default constructor (required by JPA)
     public User() {
@@ -74,6 +78,14 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public List<Thought> getThoughts() {
+        return thoughts;
+    }
+
+    public void setThoughts(List<Thought> thoughts) {
+        this.thoughts = thoughts;
     }
 
     // toString() method (optional, for debugging)
