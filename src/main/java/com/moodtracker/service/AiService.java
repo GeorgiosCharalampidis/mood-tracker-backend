@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.http.*;
 import org.springframework.web.client.RestTemplate;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 @Service
@@ -14,10 +15,11 @@ public class AiService {
 
     public String getThoughtsFromDeepSeek(String inputPrompt) {
         System.out.println("Input Prompt:\n" + inputPrompt);
-        inputPrompt = inputPrompt + "\n Create a summary of my thoughts. Do you think I am happy or sad? Please talk to me in a friendly way.";
+        inputPrompt = inputPrompt + "\n Create a summary of my thoughts. Do you think I am happy or sad? Please talk to me in a" +
+                "professional way. Dont mention like specific days, try to make it general. I want to know how I am doing in general.";
         String url = "http://localhost:11434/api/chat";
         HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.setContentType(new MediaType("application", "json", StandardCharsets.UTF_8));
 
         Map<String, Object> payload = Map.of(
                 "model", "deepseek-r1",
@@ -25,11 +27,12 @@ public class AiService {
         );
 
         HttpEntity<Map<String, Object>> requestEntity = new HttpEntity<>(payload, headers);
-        ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.POST, requestEntity, String.class);
+        ResponseEntity<byte[]> response = restTemplate.exchange(url, HttpMethod.POST, requestEntity, byte[].class);
 
         if (response.getStatusCode().is2xxSuccessful()) {
             try {
-                String responseBody = response.getBody();
+                // Ensure UTF-8 encoding
+                String responseBody = new String(response.getBody(), StandardCharsets.UTF_8);
                 StringBuilder fullResponse = new StringBuilder();
 
                 for (String jsonChunk : responseBody.split("\n")) {

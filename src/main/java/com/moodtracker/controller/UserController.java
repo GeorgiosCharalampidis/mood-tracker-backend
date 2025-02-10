@@ -45,8 +45,5 @@ public class UserController {
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping("/{username}/summary")
-    public String getUserThoughtsSummary(@PathVariable String username) {
-        return userService.getDeepSeekThoughts(username);
-    }
+
 }
