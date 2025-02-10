@@ -6,6 +6,7 @@ import com.moodtracker.model.Thought;
 import com.moodtracker.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -21,10 +22,19 @@ public class ThoughtController {
     @Autowired
     private UserService userService;
 
-    @PostMapping("/user/{userName}")
-    public ResponseEntity<Thought> createThoughtForUser(@PathVariable String userName, @RequestBody Thought thought) {
-        Thought createdThought = thoughtService.createThoughtForUser(userName, thought);
+    @PostMapping
+    public ResponseEntity<Thought> createThought(@RequestBody Thought thought) {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        Thought createdThought = thoughtService.createThoughtForUser(username, thought);
         return ResponseEntity.ok(createdThought);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<Thought>> getMyThoughts() {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        User user = userService.getUserByUsername(username);
+        List<Thought> thoughts = thoughtService.getThoughtsByUser(user);
+        return ResponseEntity.ok(thoughts);
     }
 
     @GetMapping("/user/{userName}")
