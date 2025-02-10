@@ -44,4 +44,9 @@ public class UserController {
         userService.deleteUser(username);
         return ResponseEntity.noContent().build();
     }
+
+    @GetMapping("/{username}/summary")
+    public String getUserThoughtsSummary(@PathVariable String username) {
+        return userService.summarizeUserThoughts(username);
+    }
 }
