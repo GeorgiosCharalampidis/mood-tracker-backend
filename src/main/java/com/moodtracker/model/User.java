@@ -94,11 +94,6 @@ public class User {
         return thoughts;
     }
 
-    public void setThoughts(List<Thought> thoughts) {
-        this.thoughts = thoughts;
-    }
-
-    // toString() method (optional, for debugging)
     @Override
     public String toString() {
         return "User{" +

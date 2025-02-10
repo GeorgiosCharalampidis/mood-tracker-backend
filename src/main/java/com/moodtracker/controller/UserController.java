@@ -47,6 +47,6 @@ public class UserController {
 
     @GetMapping("/{username}/summary")
     public String getUserThoughtsSummary(@PathVariable String username) {
-        return userService.summarizeUserThoughts(username);
+        return userService.getDeepSeekThoughts(username);
     }
 }
