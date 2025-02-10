@@ -21,13 +21,13 @@ public class ThoughtController {
     @Autowired
     private UserService userService;
 
-    @PostMapping("/user/{userName}")
+    @PostMapping("/{userName}")
     public ResponseEntity<Thought> createThoughtForUser(@PathVariable String userName, @RequestBody Thought thought) {
         Thought createdThought = thoughtService.createThoughtForUser(userName, thought);
         return ResponseEntity.ok(createdThought);
     }
 
-    @GetMapping("/user/{userName}")
+    @GetMapping("/{userName}")
     public ResponseEntity<List<Thought>> getThoughtsByUser(@PathVariable String userName) {
         // Fetch user by ID (you’ll need a UserService for this)
         User user = userService.getUserByUsername(userName);
@@ -57,6 +57,11 @@ public class ThoughtController {
     public ResponseEntity<Void> deleteAllThoughts() {
         thoughtService.deleteAllThoughts();
         return ResponseEntity.noContent().build(); // 204 No Content on success
+    }
+
+    @GetMapping("/{username}/summary")
+    public String getUserThoughtsSummary(@PathVariable String username) {
+        return userService.getDeepSeekThoughts(username);
     }
 
 }
