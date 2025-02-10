@@ -1,5 +1,6 @@
 package com.moodtracker.service;
 
+import com.moodtracker.exception.UserNotFoundException;
 import com.moodtracker.model.User;
 import com.moodtracker.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +39,7 @@ public class UserService {
     public User updateUser(String username, User userDetails) {
         User user = userRepository.findByUsername(username);
         if (user == null) {
-            throw new RuntimeException("User not found");
+            throw new UserNotFoundException("User " + username + " not found!");
         }
         user.setEmail(userDetails.getEmail());
         user.setPassword(userDetails.getPassword());
@@ -48,7 +49,7 @@ public class UserService {
     public void deleteUser(String username) {
         User user = userRepository.findByUsername(username);
         if (user == null) {
-            throw new RuntimeException("User not found");
+            throw new UserNotFoundException("User " + username + " not found!");
         }
         userRepository.delete(user);
     }

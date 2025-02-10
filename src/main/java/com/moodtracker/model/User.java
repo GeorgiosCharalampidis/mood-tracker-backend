@@ -71,7 +71,11 @@ public class User {
     }
 
     public void setEmail(String email) {
-        this.email = email;
+        if (email != null && email.contains("@")) {
+            this.email = email;
+        } else {
+            throw new RuntimeException("Invalid email address");
+        }
     }
 
     public String getPassword() {
@@ -79,7 +83,11 @@ public class User {
     }
 
     public void setPassword(String password) {
-        this.password = password;
+        if (password != null && password.length() >= 4) {
+            this.password = password;
+        } else {
+            throw new RuntimeException("Password must be at least 4 characters long");
+        }
     }
 
     public List<Thought> getThoughts() {
