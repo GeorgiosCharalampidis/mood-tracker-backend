@@ -4,7 +4,6 @@ import com.moodtracker.service.ThoughtService;
 import com.moodtracker.service.UserService;
 import com.moodtracker.model.Thought;
 import com.moodtracker.model.User;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,11 +14,13 @@ import java.util.List;
 @RequestMapping("/api/thoughts")
 public class ThoughtController {
 
-    @Autowired
-    private ThoughtService thoughtService;
+    private final ThoughtService thoughtService;
+    private final UserService userService;
 
-    @Autowired
-    private UserService userService;
+    public ThoughtController(ThoughtService thoughtService, UserService userService) {
+        this.thoughtService = thoughtService;
+        this.userService = userService;
+    }
 
     @PostMapping("/{userName}")
     public ResponseEntity<Thought> createThoughtForUser(@PathVariable String userName, @RequestBody Thought thought) {

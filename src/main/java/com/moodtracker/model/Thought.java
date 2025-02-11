@@ -2,18 +2,12 @@ package com.moodtracker.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
-import lombok.Getter;
-import lombok.Setter;
-
 import java.time.LocalDate;
 
-@Setter
-@Getter
 @Entity
 @Table(name = "thoughts")
 public class Thought {
 
-    // Getters and Setters
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -37,6 +31,35 @@ public class Thought {
     public Thought(String text, LocalDate date, User user) {
         this.text = text;
         this.date = date;
+        this.user = user;
+    }
+
+    // Getters and Setters
+    public Long getId() {
+        return id;
+    }
+
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
+
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
         this.user = user;
     }
 

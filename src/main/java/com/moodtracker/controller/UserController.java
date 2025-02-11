@@ -1,8 +1,8 @@
 package com.moodtracker.controller;
 
+import com.moodtracker.model.Thought;
 import com.moodtracker.model.User;
 import com.moodtracker.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,8 +12,11 @@ import java.util.List;
 @RequestMapping("/api/users")
 public class UserController {
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
+
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
 
     @PostMapping
     public ResponseEntity<User> createUser(@RequestBody User user) {
@@ -25,6 +28,13 @@ public class UserController {
     public ResponseEntity<User> getUserByUsername(@PathVariable String username) {
         User user = userService.getUserByUsername(username);
         return ResponseEntity.ok(user);
+    }
+
+    @GetMapping("/{username}/thoughts")
+    public ResponseEntity<List<Thought>> getThoughtsByUser(@PathVariable String username) {
+        User user = userService.getUserByUsername(username);
+        List<Thought> thoughts = userService.getThoughtsByUser(user);
+        return ResponseEntity.ok(thoughts);
     }
 
     @GetMapping
@@ -44,6 +54,4 @@ public class UserController {
         userService.deleteUser(username);
         return ResponseEntity.noContent().build();
     }
-
-
 }

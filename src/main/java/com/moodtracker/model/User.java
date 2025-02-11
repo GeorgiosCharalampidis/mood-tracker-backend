@@ -5,11 +5,8 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
-import lombok.Getter;
-
 import java.util.List;
 
-@Getter
 @Entity
 @Table(name = "users", uniqueConstraints = {
         @UniqueConstraint(columnNames = "username"),
@@ -17,7 +14,6 @@ import java.util.List;
 })
 public class User {
 
-    // Getters and Setters
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -53,12 +49,17 @@ public class User {
         this.password = password;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    // Getters and Setters
+    public Long getId() {
+        return id;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public String getUsername() {
+        return username;
+    }
+
+    public String getEmail() {
+        return email;
     }
 
     public void setEmail(String email) {
@@ -69,12 +70,20 @@ public class User {
         }
     }
 
+    public String getPassword() {
+        return password;
+    }
+
     public void setPassword(String password) {
         if (password != null && password.length() >= 4) {
             this.password = password;
         } else {
             throw new RuntimeException("Password must be at least 4 characters long");
         }
+    }
+
+    public List<Thought> getThoughts() {
+        return thoughts;
     }
 
     @Override

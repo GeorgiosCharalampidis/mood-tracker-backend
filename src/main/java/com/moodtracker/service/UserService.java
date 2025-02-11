@@ -4,7 +4,6 @@ import com.moodtracker.exception.UserNotFoundException;
 import com.moodtracker.model.Thought;
 import com.moodtracker.model.User;
 import com.moodtracker.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,11 +11,13 @@ import java.util.List;
 @Service
 public class UserService {
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
+    private final AiService aiService;
 
-    @Autowired
-    private AiService aiService;
+    public UserService(UserRepository userRepository, AiService aiService) {
+        this.userRepository = userRepository;
+        this.aiService = aiService;
+    }
 
     public User createUser(User user) {
         return userRepository.save(user);
@@ -37,6 +38,10 @@ public class UserService {
 
     public List<User> getAllUsers() {
         return userRepository.findAll();
+    }
+
+    public List<Thought> getThoughtsByUser(User user) {
+        return user.getThoughts();
     }
 
     public User updateUser(String username, User userDetails) {

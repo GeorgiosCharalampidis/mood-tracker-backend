@@ -14,7 +14,7 @@ public class AiService {
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     public String getThoughtsFromDeepSeek(String inputPrompt) {
-        System.out.println("Input Prompt:\n" + inputPrompt);
+//        System.out.println("Input Prompt:\n" + inputPrompt);
         inputPrompt = inputPrompt + "\n Create a summary of my thoughts. Do you think I am happy or sad? Please talk to me in a" +
                 "professional way. Dont mention like specific days, try to make it general. I want to know how I am doing in general.";
         String url = "http://localhost:11434/api/chat";

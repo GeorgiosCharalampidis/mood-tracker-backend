@@ -3,7 +3,6 @@ package com.moodtracker.service;
 import com.moodtracker.model.Thought;
 import com.moodtracker.model.User;
 import com.moodtracker.repository.ThoughtRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -12,11 +11,14 @@ import java.util.List;
 @Service
 public class ThoughtService {
 
-    @Autowired
-    private ThoughtRepository thoughtRepository;
+    private final ThoughtRepository thoughtRepository;
+    private final UserService userService;
 
-    @Autowired
-    private com.moodtracker.service.UserService userService;
+    // Constructor injection (recommended)
+    public ThoughtService(ThoughtRepository thoughtRepository, UserService userService) {
+        this.thoughtRepository = thoughtRepository;
+        this.userService = userService;
+    }
 
     public Thought createThoughtForUser(String username, Thought thought) {
         User user = userService.getUserByUsername(username);
@@ -26,10 +28,6 @@ public class ThoughtService {
             System.out.println("User found: " + user.getUsername());
         }
 
-        if (thought != null) System.out.println("Thought: " + thought.toString());
-
-        else System.out.println("Thought is null");
-
         if (thought.getText() == null || thought.getText().isEmpty()) {
             throw new RuntimeException("Thought text cannot be empty");
         }
@@ -38,7 +36,6 @@ public class ThoughtService {
         thought.setDate(LocalDate.now()); // Auto-set the date
         return thoughtRepository.save(thought);
     }
-
 
     public List<Thought> getThoughtsByUser(User user) {
         return thoughtRepository.findByUser(user);
@@ -58,6 +55,4 @@ public class ThoughtService {
     public void deleteAllThoughts() {
         thoughtRepository.deleteAll();
     }
-
-
 }
