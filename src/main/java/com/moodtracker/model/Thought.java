@@ -2,22 +2,25 @@ package com.moodtracker.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
+import lombok.Getter;
+import lombok.Setter;
+
 import java.time.LocalDate;
 
+@Setter
+@Getter
 @Entity
 @Table(name = "thoughts")
 public class Thought {
 
+    // Getters and Setters
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
-    @Size(min = 1, max = 500) // Limit text length
+    @Column(nullable = false, length = 1000)
+    @Size(min = 1, max = 1000) // Limit text length
     private String text;
-
-    @Column
-    private Integer moodRating; // Mood rating on a scale of 1-5 (optional)
 
     @Column(nullable = false)
     private LocalDate date;
@@ -31,51 +34,9 @@ public class Thought {
     }
 
     // Parameterized constructor
-    public Thought(String text, Integer moodRating, LocalDate date, User user) {
+    public Thought(String text, LocalDate date, User user) {
         this.text = text;
-        this.moodRating = moodRating;
         this.date = date;
-        this.user = user;
-    }
-
-    // Getters and Setters
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getText() {
-        return text;
-    }
-
-    public void setText(String text) {
-        this.text = text;
-    }
-
-    public Integer getMoodRating() {
-        return moodRating;
-    }
-
-    public void setMoodRating(Integer moodRating) {
-        this.moodRating = moodRating;
-    }
-
-    public LocalDate getDate() {
-        return date;
-    }
-
-    public void setDate(LocalDate date) {
-        this.date = date;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
         this.user = user;
     }
 
@@ -85,7 +46,6 @@ public class Thought {
         return "Thought{" +
                 "id=" + id +
                 ", text='" + text + '\'' +
-                ", moodRating=" + moodRating +
                 ", date=" + date +
                 ", user=" + user +
                 '}';

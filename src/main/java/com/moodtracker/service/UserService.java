@@ -57,19 +57,6 @@ public class UserService {
         userRepository.delete(user);
     }
 
-//    public String summarizeUserThoughts(String username) {
-//        User user = userRepository.findByUsername(username);
-//        if (user == null) {
-//            throw new UserNotFoundException("User " + username + " not found!");
-//        }
-//        System.out.println("Summarizing thoughts for user: " + user.getUsername());
-//        StringBuilder thoughtsBuilder = new StringBuilder();
-//        for (Thought thought : user.getThoughts()) {
-//            thoughtsBuilder.append(thought.getText()).append(" ");
-//        }
-//        return aiService.summarizeThoughts(thoughtsBuilder.toString());
-//    }
-
     public String getDeepSeekThoughts(String username) {
         User user = userRepository.findByUsername(username);
         if (user == null) {
@@ -77,11 +64,7 @@ public class UserService {
         }
         System.out.println("Getting thoughts for user: " + user.getUsername());
         StringBuilder thoughtsBuilder = new StringBuilder();
-        for (int i = 0; i < user.getThoughts().size(); i++) {
-            Thought thought = user.getThoughts().get(i);
-            thoughtsBuilder.append("Day ").append(i + 1).append(": ");
-            thoughtsBuilder.append(thought.getText()).append("\n");
-        }
+        user.getThoughts().forEach(thought -> thoughtsBuilder.append(thought.getText()).append("\n"));
         return aiService.getThoughtsFromDeepSeek(thoughtsBuilder.toString());
     }
 }
