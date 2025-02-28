@@ -47,7 +47,7 @@ public class ThoughtController {
         return ResponseEntity.ok(thoughts);
     }
 
-    @DeleteMapping("/{thoughtId}")
+    @DeleteMapping("/{userName}/{thoughtId}")
     public ResponseEntity<Void> deleteThought(@PathVariable Long thoughtId) {
         thoughtService.deleteThought(thoughtId);
         return ResponseEntity.noContent().build(); // 204 No Content on success
