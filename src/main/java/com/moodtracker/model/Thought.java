@@ -12,8 +12,8 @@ public class Thought {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, length = 1000)
-    @Size(min = 1, max = 1000) // Limit text length
+    @Column(nullable = false, length = 5000)
+    @Size(min = 1, max = 5000) // Limit text length
     private String text;
 
     @Column(nullable = false)

@@ -14,9 +14,14 @@ public class AiService {
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     public String getThoughtsFromDeepSeek(String inputPrompt) {
-//        System.out.println("Input Prompt:\n" + inputPrompt);
-        inputPrompt = inputPrompt + "\n Create a summary of my thoughts. Do you think I am happy or sad? Please talk to me in a" +
-                "professional way. Dont mention like specific days, try to make it general. I want to know how I am doing in general.";
+        inputPrompt = inputPrompt + "\n You are an AI that reads and responds to the user's daily thoughts. " +
+                "Your goal is not to provide generic advice, but to engage with their ideas in a meaningful way. Your responses should feel like a thoughtful conversation, acknowledging their perspective, questioning assumptions, and offering insights rather than solutions. You should:\n" +
+                "Identify the main themes or emotions in the user's thoughts.\n" +
+                "Respond with depth, as if you're having a real discussion, not just summarizing.\n" +
+                "Challenge ideas when necessary, but in a way that encourages reflection, not argument.\n" +
+                "Avoid clichés or overly positive encouragement unless it feels natural.\n" +
+                "Ask open-ended questions to keep the conversation going.\n" +
+                "The user does not expect structured self-improvement advice but rather a genuine engagement with their thoughts. Your response should feel like a deep, personal conversation rather than a pre-written response.";
         String url = "http://localhost:11434/api/chat";
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(new MediaType("application", "json", StandardCharsets.UTF_8));
